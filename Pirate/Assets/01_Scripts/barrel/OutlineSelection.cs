@@ -11,7 +11,6 @@ public class OutlineSelection : MonoBehaviour
 
     void Update()
     {
-        // Highlight
         if (highlight != null)
         {
             highlight.gameObject.GetComponent<Outline>().enabled = false;
@@ -43,26 +42,15 @@ public class OutlineSelection : MonoBehaviour
             }
         }
 
-       /* if (Input.GetMouseButtonDown(0))
+       if (Input.GetMouseButtonDown(0))
         {
             if (highlight)
             {
-                if (selection != null)
-                {
-                    selection.gameObject.GetComponent<Outline>().enabled = false;
-                }
                 selection = raycastHit.transform;
-                selection.gameObject.GetComponent<Outline>().enabled = true;
-                highlight = null;
-            }
-            else
-            {
-                if (selection)
+                if(selection.TryGetComponent<Knife>(out Knife n))
                 {
-                    selection.gameObject.GetComponent<Outline>().enabled = false;
-                    selection = null;
                 }
             }
-        }*/
+        }
     }
 }

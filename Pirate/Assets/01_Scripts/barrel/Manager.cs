@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
+    public static Manager Instance;
+
     [SerializeField] private Transform holeParent;
     [SerializeField] private Hole[] holes;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
