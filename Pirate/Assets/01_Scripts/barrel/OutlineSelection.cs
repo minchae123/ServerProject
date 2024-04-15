@@ -22,8 +22,15 @@ public class OutlineSelection : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit))
         {
             highlight = raycastHit.transform;
-            if (highlight.CompareTag("Selectable") && highlight != selection)
+            if (highlight.CompareTag("Hole") && highlight != selection)
             {
+                if(highlight.gameObject.TryGetComponent<Hole>(out Hole hole))
+                {
+                    if (hole.IsSelected)
+                    {
+                        return; // 한번 선택되었을 경우
+                    }
+                }
                 if (highlight.gameObject.GetComponent<Outline>() != null)
                 {
                     highlight.gameObject.GetComponent<Outline>().enabled = true;
@@ -47,8 +54,17 @@ public class OutlineSelection : MonoBehaviour
             if (highlight)
             {
                 selection = raycastHit.transform;
-                if(selection.TryGetComponent<Knife>(out Knife n))
+                if(selection.TryGetComponent<Hole>(out Hole hole))
                 {
+                    hole.SetSelected();
+                    if(hole.IsBoom) // 터지는 거면
+                    {
+                        print("팡");
+                    }
+                    else
+                    {
+                        print("다음사람");
+                    }
                 }
             }
         }

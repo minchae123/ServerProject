@@ -19,6 +19,14 @@ public class Manager : MonoBehaviour
         ResetGame();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ResetGame();
+        }
+    }
+
     public void ResetGame()
     {
         holes = holeParent.GetComponentsInChildren<Hole>();
