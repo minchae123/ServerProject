@@ -31,6 +31,11 @@ public class Hole : MonoBehaviour
         knifePref.transform.DOLocalMoveX(-0.85f, 0.3f).OnComplete(() => CheckIsBoom());
     }
 
+    public void CheckSelected()
+    {
+        knifePref.SetActive(true);
+    }
+
     private void CheckIsBoom()
     {
         if (IsBoom) // 터지는 거면

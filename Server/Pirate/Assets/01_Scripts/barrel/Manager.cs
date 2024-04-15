@@ -42,6 +42,17 @@ public class Manager : MonoBehaviour
         holes[random].SetBoom();
     }
 
+    public void SetOtherScreen()
+    {
+        foreach(Hole h in holes)
+        {
+            if (h.IsSelected)
+            {
+                h.CheckSelected();
+            }
+        }
+    }
+
     public void SetPirateBoom()
     {
         pirate.GetComponent<Rigidbody>().AddForce(new Vector3(0f, 10f, 0), ForceMode.VelocityChange);
