@@ -153,8 +153,7 @@ public class Manager : MonoBehaviour
 
 	void NotifyDisconnection()
 	{
-		string message = "ȸ���� ������ϴ�.\n\n��ư�� ��������.";
-
+		string message = "서버 연결이 종료되었습니다";
 	}
 
 	public void ResetGame()
