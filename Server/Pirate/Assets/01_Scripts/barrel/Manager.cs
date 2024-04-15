@@ -3,24 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using DG.Tweening;
 
 public class Manager : MonoBehaviour
 {
 	private enum GameProgress
 	{
-		None = 0,       // ½ÃÇÕ ½ÃÀÛ Àü.
-		Ready,          // ½ÃÇÕ ½ÃÀÛ ½ÅÈ£ Ç¥½Ã.
-		Turn,           // ½ÃÇÔ Áß.
-		Result,         // °á°ú Ç¥½Ã.
-		GameOver,       // °ÔÀÓ Á¾·á.
-		Disconnect,     // ¿¬°á ²÷±â.
+		None = 0,       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
+		Ready,          // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ Ç¥ï¿½ï¿½.
+		Turn,           // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
+		Result,         // ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½.
+		GameOver,       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+		Disconnect,     // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 	};
 
-	// ÅÏ Á¾·ù.
+	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 	private enum Turn
 	{
-		Own = 0,        // ÀÚ»êÀÇ ÅÏ.
-		Opponent,       // »ó´ëÀÇ ÅÏ.
+		Own = 0,        // ï¿½Ú»ï¿½ï¿½ï¿½ ï¿½ï¿½.
+		Opponent,       // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
 	};
 
 	private enum Player
@@ -28,11 +29,17 @@ public class Manager : MonoBehaviour
 		Player1 = 0,
 		Player2,
 	};
+    [SerializeField] private GameObject pirate;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
 	private enum Winner
 	{
-		Player1 = 0,         // ¡Û½Â¸®.
-		Player2 = 1          // ¡¿½Â¸®.
+		Player1 = 0,         // ï¿½Û½Â¸ï¿½.
+		Player2 = 1          // ï¿½ï¿½ï¿½Â¸ï¿½.
 	};
 
 	private const float turnTime = 100;
@@ -146,7 +153,7 @@ public class Manager : MonoBehaviour
 
 	void NotifyDisconnection()
 	{
-		string message = "È¸¼±ÀÌ ²÷°å½À´Ï´Ù.\n\n¹öÆ°À» ´©¸£¼¼¿ä.";
+		string message = "È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.\n\nï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.";
 
 	}
 
@@ -160,7 +167,23 @@ public class Manager : MonoBehaviour
 			holes[i].ResetGame();
 		}
 
-		int random = Random.Range(0, holes.Length);
-		holes[random].SetBoom();
-	}
+        int random = Random.Range(0, holes.Length);
+        holes[random].SetBoom();
+    }
+
+    public void SetOtherScreen()
+    {
+        foreach(Hole h in holes)
+        {
+            if (h.IsSelected)
+            {
+                h.CheckSelected();
+            }
+        }
+    }
+
+    public void SetPirateBoom()
+    {
+        pirate.GetComponent<Rigidbody>().AddForce(new Vector3(0f, 10f, 0), ForceMode.VelocityChange);
+    }
 }

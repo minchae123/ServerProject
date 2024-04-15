@@ -5,15 +5,9 @@ using DG.Tweening;
 public class Hole : MonoBehaviour
 {
     [SerializeField] private GameObject knifePref;
-    private Vector3 knifeOriginalTransform;
 
     public bool IsSelected = false;
     public bool IsBoom = false;
-
-    private void Start()
-    {
-        knifeOriginalTransform = knifePref.transform.position;
-    }
 
     public void SetBoom()
     {
@@ -27,13 +21,31 @@ public class Hole : MonoBehaviour
         knifePref.SetActive(false);
 
         knifePref.GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
-        knifePref.transform.position = knifeOriginalTransform;
+        knifePref.transform.localPosition = new Vector3(-2, 0, 0);
     }
 
     public void SetSelected()
     {
         IsSelected = true;
         knifePref.SetActive(true);
-        knifePref.transform.DOLocalMoveX(-0.85f, 0.3f);
+        knifePref.transform.DOLocalMoveX(-0.85f, 0.3f).OnComplete(() => CheckIsBoom());
+    }
+
+    public void CheckSelected()
+    {
+        knifePref.SetActive(true);
+    }
+
+    private void CheckIsBoom()
+    {
+        if (IsBoom) // 터지는 거면
+        {
+            print("팡");
+            Manager.Instance.SetPirateBoom();
+        }
+        else
+        {
+            print("다음사람");
+        }
     }
 }
