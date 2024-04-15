@@ -31,11 +31,6 @@ public class Manager : MonoBehaviour
 	};
     [SerializeField] private GameObject pirate;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-
 	private enum Winner
 	{
 		Player1 = 0,         // �۽¸�.
