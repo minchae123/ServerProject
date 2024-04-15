@@ -12,7 +12,7 @@ namespace Server
         List<ClientSession> _sessions = new List<ClientSession>();
         object _lock = new object();
 
-        public void Move(ClientSession session, C_MoveStone packet)
+        public void Move(ClientSession session, C_SelectHole packet)
         {
             lock (_lock)
             {

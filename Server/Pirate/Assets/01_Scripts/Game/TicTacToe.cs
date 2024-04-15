@@ -181,7 +181,7 @@ public class TicTacToe : MonoBehaviour
         bool setMark = false;
         if (turn == localMark)
         {
-            setMark = DoOwnTurn(); // 내턴 입력
+            setMark = DoOwnTurn();
 
             //둘 수 없는 장소를 누르면 클릭용 사운드효과를 냅니다.
             if (setMark == false && Input.GetMouseButtonDown(0))
@@ -191,7 +191,7 @@ public class TicTacToe : MonoBehaviour
         }
         else
         {
-            setMark = DoOppnentTurn(); // 상대턴 입력
+            setMark = DoOppnentTurn();
             //둘 수 없을 때 누르면 클릭용 사운드 효과를 냅니다.
             if (Input.GetMouseButtonDown(0))
             {
@@ -291,10 +291,10 @@ public class TicTacToe : MonoBehaviour
         }
 
         // 선택한 칸의 정보를 송신합니다.
-        //byte[] buffer = new byte[1];
-        //buffer[0] = (byte)index;
-        //Debug.Log($"송신 : {buffer[0]}");
-        C_MoveStone movePacket = new C_MoveStone();
+        byte[] buffer = new byte[1];
+        buffer[0] = (byte)index;
+        Debug.Log($"송신 : {buffer[0]}");
+        C_SelectHole movePacket = new C_SelectHole();
         movePacket.StonePosition = index;
         network.Send(movePacket.Write());
 

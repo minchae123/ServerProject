@@ -12,7 +12,7 @@ namespace Server {
         // 돌 놓는거
         public static void C_MoveStoneHandler(PacketSession session, IPacket packet)
         {
-            C_MoveStone movePacket = packet as C_MoveStone;
+            C_SelectHole movePacket = packet as C_SelectHole;
             ClientSession clientSession = session as ClientSession;
             if (clientSession.Room == null)
                 return;

@@ -14,7 +14,7 @@ namespace Server
         S_BroadcastLeaveGame = 3,
         S_PlayerList = 4,
 
-        C_MoveStone = 5,
+        C_SelectHole = 5,
         S_BroadCastStone = 6,
     }
 
@@ -25,10 +25,10 @@ namespace Server
         ArraySegment<byte> Write();
     }
 
-    public class C_MoveStone : IPacket
+    public class C_SelectHole : IPacket
     {
         public int StonePosition;
-        public ushort Protocol { get { return (ushort)PacketID.C_MoveStone; } }
+        public ushort Protocol { get { return (ushort)PacketID.C_SelectHole; } }
 
         public void Read(ArraySegment<byte> segment)
         {
@@ -45,7 +45,7 @@ namespace Server
             ushort count = 0;
 
             count += sizeof(ushort);
-            Array.Copy(BitConverter.GetBytes((ushort)PacketID.C_MoveStone), 0, segment.Array, segment.Offset + count, sizeof(ushort));
+            Array.Copy(BitConverter.GetBytes((ushort)PacketID.C_SelectHole), 0, segment.Array, segment.Offset + count, sizeof(ushort));
             count += sizeof(ushort);
             Array.Copy(BitConverter.GetBytes(this.StonePosition), 0, segment.Array, segment.Offset + count, sizeof(int));
             count += sizeof(int);

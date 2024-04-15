@@ -152,8 +152,5 @@ public class SequenceManager : MonoBehaviour
             m_mode = Mode.Disconnection;
         }
     }
-
-
-
 }
 

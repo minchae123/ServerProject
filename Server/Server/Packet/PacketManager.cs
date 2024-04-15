@@ -29,8 +29,8 @@ namespace Server {
             _makeFunc.Add((ushort)PacketID.C_LeaveGame, MakePacket<C_LeaveGame>);
             _handler.Add((ushort)PacketID.C_LeaveGame, PacketHandler.C_LeaveGameHandler);
 
-            _makeFunc.Add((ushort)PacketID.C_MoveStone, MakePacket<C_MoveStone>);
-            _handler.Add((ushort)PacketID.C_MoveStone, PacketHandler.C_MoveStoneHandler);
+            _makeFunc.Add((ushort)PacketID.C_SelectHole, MakePacket<C_SelectHole>);
+            _handler.Add((ushort)PacketID.C_SelectHole, PacketHandler.C_MoveStoneHandler);
         }
 
         public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer, Action<PacketSession, IPacket> onRecvCallback = null)
