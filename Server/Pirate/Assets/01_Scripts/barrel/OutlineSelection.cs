@@ -57,14 +57,6 @@ public class OutlineSelection : MonoBehaviour
                 if(selection.TryGetComponent<Hole>(out Hole hole))
                 {
                     hole.SetSelected();
-                    if(hole.IsBoom) // 터지는 거면
-                    {
-                        print("팡");
-                    }
-                    else
-                    {
-                        print("다음사람");
-                    }
                 }
             }
         }
