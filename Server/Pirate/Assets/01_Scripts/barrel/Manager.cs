@@ -52,7 +52,14 @@ public class Manager : MonoBehaviour
 	public static Manager Instance;
 
 	[SerializeField] private Transform holeParent;
+	private Transform upParent;
+	private Transform downParent;
+
+	[SerializeField] private GameObject holePref;
 	[SerializeField] private Hole[] holes;
+
+	[SerializeField] private int upHoleCnt = 8;
+	[SerializeField] private int downHoleCnt = 8;
 
 	private void Awake()
 	{
@@ -64,6 +71,30 @@ public class Manager : MonoBehaviour
 		}
 
 		isGameOver = false;
+
+		upParent = holeParent.Find("Up");
+		downParent = holeParent.Find("Down");
+
+		for (int i = 0; i < upHoleCnt; i++)
+		{
+			float angle = i * (Mathf.PI * 2.0f) / upHoleCnt;
+			GameObject pref = Instantiate(holePref, upParent);
+			pref.transform.position = transform.position + new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * 1.5f;
+			pref.transform.localPosition = new Vector3(pref.transform.localPosition.x, 0.45f, pref.transform.localPosition.z);
+			pref.transform.rotation = Quaternion.Euler(90, -(360f / upHoleCnt) * i - 180, 0);
+		}
+
+		for (int i = 0; i < downHoleCnt; i++)
+		{
+			float angle = i * (Mathf.PI * 2.0f) / downHoleCnt;
+			GameObject pref = Instantiate(holePref, downParent);
+			pref.transform.position = transform.position + new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * 1.5f;
+			pref.transform.localPosition = new Vector3(pref.transform.localPosition.x, 0.25f, pref.transform.localPosition.z);
+			pref.transform.rotation = Quaternion.Euler(90, -(360f / downHoleCnt) * i - 180, 0);
+		}
+
+		downParent.transform.rotation = Quaternion.Euler(0, -20f, 0);
+
 		ResetGame();
 	}
 
