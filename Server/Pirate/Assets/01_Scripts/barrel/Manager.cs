@@ -121,7 +121,7 @@ public class Manager : MonoBehaviour
 		}
 	}
 
-	private void GameStart()
+	public void GameStart()
 	{
 		progress = GameProgress.Ready;
 
@@ -140,12 +140,12 @@ public class Manager : MonoBehaviour
 		isGameOver = false;
 	}
 
-	private void UpdateReady()
+	public void UpdateReady()
 	{
 
 	}
 
-	private void UpdateTurn()
+	public void UpdateTurn()
 	{
 		print(playerTurn.ToString());
 		bool setMark = false;

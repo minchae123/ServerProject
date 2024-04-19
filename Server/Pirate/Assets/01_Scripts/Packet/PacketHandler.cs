@@ -38,7 +38,7 @@ namespace DummyClient
 
         public static void S_BroadCastStoneHandler(PacketSession session, IPacket packet)
         {
-            S_BroadCastStone pkt = packet as S_BroadCastStone;
+            S_BroadCastHole pkt = packet as S_BroadCastHole;
             ServerSession serverSession = session as ServerSession;
 
             PlayerManager.Instance.BroadCastStone(pkt);

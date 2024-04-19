@@ -33,7 +33,7 @@ namespace DummyClient {
             _makeFunc.Add((ushort)PacketID.S_PlayerList, MakePacket<S_PlayerList>);
             _handler.Add((ushort)PacketID.S_PlayerList, PacketHandler.S_PlayerListHandler);
 
-            _makeFunc.Add((ushort)PacketID.S_BroadCastStone, MakePacket<S_BroadCastStone>);
+            _makeFunc.Add((ushort)PacketID.S_BroadCastStone, MakePacket<S_BroadCastHole>);
             _handler.Add((ushort)PacketID.S_BroadCastStone, PacketHandler.S_BroadCastStoneHandler);
         }
 

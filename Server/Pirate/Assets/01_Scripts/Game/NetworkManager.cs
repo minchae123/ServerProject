@@ -68,7 +68,6 @@ public class NetworkManager : MonoBehaviour
             state.result = (m_isConnected == true) ? NetEventResult.Success : NetEventResult.Failure;
             m_handler(state);
             Debug.Log("event handler called");
-
         }
 
         return true;

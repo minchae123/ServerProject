@@ -15,10 +15,9 @@ public class PlayerManager
 
 
     // 돌 정보 수신
-    public void BroadCastStone(S_BroadCastStone packet)
+    public void BroadCastStone(S_BroadCastHole packet)
     {
-        StonePosition = packet.StonePosition;
-        Debug.Log($"스톤포지션 수신 : {StonePosition}");
+        StonePosition = packet.holeNumber;
     }
 
     public int returnStone()

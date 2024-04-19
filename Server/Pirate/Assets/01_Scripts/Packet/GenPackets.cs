@@ -56,9 +56,9 @@ namespace DummyClient
         }
     }
 
-    public class S_BroadCastStone : IPacket
+    public class S_BroadCastHole : IPacket
     {
-        public int StonePosition;
+        public int holeNumber;
         public ushort Protocol { get { return (ushort)PacketID.S_BroadCastStone; } }
 
         public void Read(ArraySegment<byte> segment)
@@ -66,7 +66,7 @@ namespace DummyClient
             ushort count = 0;
             count += sizeof(ushort);
             count += sizeof(ushort);
-            this.StonePosition = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+            this.holeNumber = BitConverter.ToInt32(segment.Array, segment.Offset + count);
             count += sizeof(int);
         }
 
@@ -78,7 +78,7 @@ namespace DummyClient
             count += sizeof(ushort);
             Array.Copy(BitConverter.GetBytes((ushort)PacketID.S_BroadCastStone), 0, segment.Array, segment.Offset + count, sizeof(ushort));
             count += sizeof(ushort);
-            Array.Copy(BitConverter.GetBytes(this.StonePosition), 0, segment.Array, segment.Offset + count, sizeof(int));
+            Array.Copy(BitConverter.GetBytes(this.holeNumber), 0, segment.Array, segment.Offset + count, sizeof(int));
             count += sizeof(int);
 
             Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));

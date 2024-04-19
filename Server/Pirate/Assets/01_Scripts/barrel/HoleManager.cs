@@ -11,9 +11,9 @@ public class HoleManager
 
 	public static HoleManager Instance { get;} = new HoleManager();
 
-	public void BroadCastStone(S_BroadCastStone packet)
+	public void BroadCastHole(S_BroadCastHole packet)
 	{
-		holeIndex = packet.StonePosition;
+		holeIndex = packet.holeNumber;
 		Debug.Log($"Hole Num : {holeIndex}");
 	}
 

@@ -139,15 +139,17 @@ public class SequenceManager : MonoBehaviour
         {
             m_mode = Mode.Game;
 
-            GameObject game = GameObject.Find("TicTacToe");
-            game.GetComponent<TicTacToe>().GameStart();
+            FindObjectOfType<Manager>().GameStart();
+            //GameObject game = GameObject.Find("TicTacToe");
+            //game.GetComponent<TicTacToe>().GameStart();
         }
     }
 
     void OnUpdateGame()
     {
-        GameObject game = GameObject.Find("TicTacToe");
-        if (game.GetComponent<TicTacToe>().IsGameOver() == true)
+        //GameObject game = GameObject.Find("TicTacToe");
+        bool isGameOver = FindObjectOfType<Manager>().isGameOver;
+        if (isGameOver == true)
         {
             m_mode = Mode.Disconnection;
         }
