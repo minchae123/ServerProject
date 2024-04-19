@@ -4,24 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DG.Tweening;
+using UnityEngine.UI;
+using DummyClient;
 
 public class Manager : MonoBehaviour
 {
 	private enum GameProgress
 	{
-		None = 0,       // ���� ���� ��.
-		Ready,          // ���� ���� ��ȣ ǥ��.
-		Turn,           // ���� ��.
-		Result,         // ��� ǥ��.
-		GameOver,       // ���� ����.
-		Disconnect,     // ���� ����.
+		None = 0,
+		Ready,
+		Turn,
+		Result,
+		GameOver,
+		Disconnect,
 	};
 
-	// �� ����.
 	private enum Turn
 	{
-		Own = 0,        // �ڻ��� ��.
-		Opponent,       // ����� ��.
+		Own = 0,
+		Opponent,
 	};
 
 	private enum Player
@@ -29,12 +30,12 @@ public class Manager : MonoBehaviour
 		Player1 = 0,
 		Player2,
 	};
-    [SerializeField] private GameObject pirate;
+	[SerializeField] private GameObject pirate;
 
 	private enum Winner
 	{
-		Player1 = 0,         // �۽¸�.
-		Player2 = 1          // ���¸�.
+		Player1 = 0,
+		Player2 = 1
 	};
 
 	private const float turnTime = 100;
@@ -94,7 +95,7 @@ public class Manager : MonoBehaviour
 		progress = GameProgress.Ready;
 
 		playerTurn = 0;
-		if(networkManager.IsServer())
+		if (networkManager.IsServer())
 		{
 			localPlayer = Player.Player1;
 			romotePlayer = Player.Player2;
@@ -115,17 +116,50 @@ public class Manager : MonoBehaviour
 
 	private void UpdateTurn()
 	{
+		print(playerTurn.ToString());
+		bool setMark = false;
+		if (playerTurn == localPlayer)
+		{
+			setMark = DoOwnTurn();
 
+		}
+		else
+		{
+			setMark = DoOppnentTurn();
+
+		}
+
+		if (setMark == false)
+		{
+			return;
+		}
+		else
+		{
+		}
+
+		if (winner == Winner.Player1)
+		{
+
+			progress = GameProgress.Result;
+		}
 	}
 
-	private void DoOwnTurn()
+	private bool DoOwnTurn()
 	{
+		int index = 0;
 
+		byte[] buffer = new byte[1];
+		buffer[0] = (byte)index;
+		C_SelectHole selctHole = new C_SelectHole();
+		selctHole.holeNumber = index;
+		networkManager.Send(selctHole.Write());
+		return true;
 	}
 
-	private void DoDppnentTurn()
+	private bool DoOppnentTurn()
 	{
 
+		return true;
 	}
 
 	public bool IsGameOver()
@@ -161,23 +195,23 @@ public class Manager : MonoBehaviour
 			holes[i].ResetGame();
 		}
 
-        int random = Random.Range(0, holes.Length);
-        holes[random].SetBoom();
-    }
+		int random = Random.Range(0, holes.Length);
+		holes[random].SetBoom();
+	}
 
-    public void SetOtherScreen()
-    {
-        foreach(Hole h in holes)
-        {
-            if (h.IsSelected)
-            {
-                h.CheckSelected();
-            }
-        }
-    }
+	public void SetOtherScreen()
+	{
+		foreach (Hole h in holes)
+		{
+			if (h.IsSelected)
+			{
+				h.CheckSelected();
+			}
+		}
+	}
 
-    public void SetPirateBoom()
-    {
-        pirate.GetComponent<Rigidbody>().AddForce(new Vector3(0f, 10f, 0), ForceMode.VelocityChange);
-    }
+	public void SetPirateBoom()
+	{
+		pirate.GetComponent<Rigidbody>().AddForce(new Vector3(0f, 10f, 0), ForceMode.VelocityChange);
+	}
 }

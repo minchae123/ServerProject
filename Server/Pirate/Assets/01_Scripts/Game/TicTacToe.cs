@@ -295,7 +295,7 @@ public class TicTacToe : MonoBehaviour
         buffer[0] = (byte)index;
         Debug.Log($"송신 : {buffer[0]}");
         C_SelectHole movePacket = new C_SelectHole();
-        movePacket.StonePosition = index;
+        movePacket.holeNumber = index;
         network.Send(movePacket.Write());
 
         return true;
