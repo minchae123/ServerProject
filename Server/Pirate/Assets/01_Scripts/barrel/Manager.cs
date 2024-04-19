@@ -223,7 +223,7 @@ public class Manager : MonoBehaviour
 		holes = holeParent.GetComponentsInChildren<Hole>();
 		for (int i = 0; i < holes.Length; i++)
 		{
-			holes[i].ResetGame();
+			holes[i].ResetGame(i);
 		}
 
 		int random = Random.Range(0, holes.Length);

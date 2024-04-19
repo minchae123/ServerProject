@@ -10,13 +10,17 @@ public class Hole : MonoBehaviour
     public bool IsSelected = false;
     public bool IsBoom = false;
 
+    public int numOfList;
+
     public void SetBoom()
     {
         IsBoom = true;
     }
 
-    public void ResetGame()
+    public void ResetGame(int i)
     {
+        numOfList = i;
+
         IsBoom = false;
         IsSelected = false;
         knifePref.SetActive(false);
@@ -30,6 +34,8 @@ public class Hole : MonoBehaviour
         IsSelected = true;
         knifePref.SetActive(true);
         knifePref.transform.DOLocalMoveX(-0.85f, 0.3f).OnComplete(() => CheckIsBoom());
+
+        print(numOfList);
     }
 
     public void CheckSelected()
