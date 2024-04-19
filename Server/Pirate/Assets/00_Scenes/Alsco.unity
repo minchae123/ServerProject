@@ -1432,6 +1432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc602b8fbff0394aab522d80045d46b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pirate: {fileID: 0}
+  isGameOver: 0
   holeParent: {fileID: 562196386}
   holes: []
 --- !u!4 &1415089127
