@@ -5,6 +5,7 @@ using DG.Tweening;
 public class Hole : MonoBehaviour
 {
     [SerializeField] private GameObject knifePref;
+    private Vector3 originVec = new Vector3(-2f, 0, 0);
 
     public bool IsSelected = false;
     public bool IsBoom = false;
@@ -21,7 +22,7 @@ public class Hole : MonoBehaviour
         knifePref.SetActive(false);
 
         knifePref.GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
-        knifePref.transform.localPosition = new Vector3(-2, 0, 0);
+        knifePref.transform.localPosition = originVec;
     }
 
     public void SetSelected()
@@ -34,6 +35,7 @@ public class Hole : MonoBehaviour
     public void CheckSelected()
     {
         knifePref.SetActive(true);
+        knifePref.transform.localPosition = new Vector3(-0.85f, 0, 0);
     }
 
     private void CheckIsBoom()
