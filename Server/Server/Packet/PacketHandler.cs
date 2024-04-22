@@ -16,7 +16,7 @@ namespace Server {
             ClientSession clientSession = session as ClientSession;
             if (clientSession.Room == null)
                 return;
-            Console.WriteLine($"{movePacket.StonePosition}");
+            Console.WriteLine($"{movePacket.selectHole}");
             
             GameRoom room = clientSession.Room;
             room.Move(clientSession, movePacket);

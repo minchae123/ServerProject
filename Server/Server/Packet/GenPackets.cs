@@ -15,7 +15,7 @@ namespace Server
         S_PlayerList = 4,
 
         C_SelectHole = 5,
-        S_BroadCastStone = 6,
+        S_BroadCastHole = 6,
     }
 
     public interface IPacket
@@ -27,7 +27,7 @@ namespace Server
 
     public class C_SelectHole : IPacket
     {
-        public int StonePosition;
+        public int selectHole;
         public ushort Protocol { get { return (ushort)PacketID.C_SelectHole; } }
 
         public void Read(ArraySegment<byte> segment)
@@ -35,7 +35,7 @@ namespace Server
             ushort count = 0;
             count += sizeof(ushort);
             count += sizeof(ushort);
-            this.StonePosition = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+            this.selectHole = BitConverter.ToInt32(segment.Array, segment.Offset + count);
             count += sizeof(int);
         }
 
@@ -47,7 +47,7 @@ namespace Server
             count += sizeof(ushort);
             Array.Copy(BitConverter.GetBytes((ushort)PacketID.C_SelectHole), 0, segment.Array, segment.Offset + count, sizeof(ushort));
             count += sizeof(ushort);
-            Array.Copy(BitConverter.GetBytes(this.StonePosition), 0, segment.Array, segment.Offset + count, sizeof(int));
+            Array.Copy(BitConverter.GetBytes(this.selectHole), 0, segment.Array, segment.Offset + count, sizeof(int));
             count += sizeof(int);
 
             Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
@@ -56,39 +56,39 @@ namespace Server
         }
     }
 
-    public class S_BroadCastStone : IPacket
-    {
-        public int StonePosition;
-        public ushort Protocol { get { return (ushort)PacketID.S_BroadCastStone; } }
+	public class S_BroadCastHole : IPacket
+	{
+		public int holeNumber;
+		public ushort Protocol { get { return (ushort)PacketID.S_BroadCastHole; } }
 
-        public void Read(ArraySegment<byte> segment)
-        {
-            ushort count = 0;
-            count += sizeof(ushort);
-            count += sizeof(ushort);
-            this.StonePosition = BitConverter.ToInt32(segment.Array, segment.Offset + count);
-            count += sizeof(int);
-        }
+		public void Read(ArraySegment<byte> segment)
+		{
+			ushort count = 0;
+			count += sizeof(ushort);
+			count += sizeof(ushort);
+			this.holeNumber = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+			count += sizeof(int);
+		}
 
-        public ArraySegment<byte> Write()
-        {
-            ArraySegment<byte> segment = SendBufferHelper.Open(4096);
-            ushort count = 0;
+		public ArraySegment<byte> Write()
+		{
+			ArraySegment<byte> segment = SendBufferHelper.Open(4096);
+			ushort count = 0;
 
-            count += sizeof(ushort);
-            Array.Copy(BitConverter.GetBytes((ushort)PacketID.S_BroadCastStone), 0, segment.Array, segment.Offset + count, sizeof(ushort));
-            count += sizeof(ushort);
-            Array.Copy(BitConverter.GetBytes(this.StonePosition), 0, segment.Array, segment.Offset + count, sizeof(int));
-            count += sizeof(int);
+			count += sizeof(ushort);
+			Array.Copy(BitConverter.GetBytes((ushort)PacketID.S_BroadCastHole), 0, segment.Array, segment.Offset + count, sizeof(ushort));
+			count += sizeof(ushort);
+			Array.Copy(BitConverter.GetBytes(this.holeNumber), 0, segment.Array, segment.Offset + count, sizeof(int));
+			count += sizeof(int);
 
-            Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
+			Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
 
-            return SendBufferHelper.Close(count);
-        }
-    }
+			return SendBufferHelper.Close(count);
+		}
+	}
 
 
-    public class S_BroadcastEnterGame : IPacket
+	public class S_BroadcastEnterGame : IPacket
     {
         public int playerId;
 

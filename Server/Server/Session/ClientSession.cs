@@ -16,7 +16,7 @@ namespace Server.Session
         public int SessionId { get; set; }
         public GameRoom Room { get; set; }
 
-        public int StonePosition { get; set; }
+        public int holeNumber { get; set; }
 
         public override void OnConnected(EndPoint endPoint)
         {

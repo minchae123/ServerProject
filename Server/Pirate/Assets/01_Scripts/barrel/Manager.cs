@@ -113,10 +113,15 @@ public class Manager : MonoBehaviour
 		switch (progress)
 		{
 			case GameProgress.Ready:
+				UpdateReady();
 				break;
+
 			case GameProgress.Turn:
+				UpdateTurn();
 				break;
+
 			case GameProgress.GameOver:
+				//UpdateGameOver();
 				break;
 		}
 	}
@@ -140,9 +145,20 @@ public class Manager : MonoBehaviour
 		isGameOver = false;
 	}
 
+	// 시합 시작 전의 신호표시 시간.
+	private const float waitTime = 1.0f;
+	private float currentTime;
+
 	public void UpdateReady()
 	{
+		currentTime += Time.deltaTime;
+		//Debug.Log("UpdateReady");
 
+		if (currentTime > waitTime)
+		{
+			// 게임 시작입니다.
+			progress = GameProgress.Turn;
+		}
 	}
 
 	public void UpdateTurn()
@@ -175,20 +191,59 @@ public class Manager : MonoBehaviour
 		}
 	}
 
+	private float timer;
+	int index = 0;
+	bool isClicked = false;
 	private bool DoOwnTurn()
 	{
-		int index = 0;
+		//print(index);
+		//timer -= Time.deltaTime;
+		/*if (timer <= 0.0f)
+		{
+			// 타임오버.
+			timer = 0.0f;
+			*//*do
+			{
+				index = UnityEngine.Random.Range(0, 8);
+			} while (spaces[index] != -1);*//*
+		}*/
+		if (isClicked)
+		{
+			C_SelectHole selctHole = new C_SelectHole();
+			selctHole.holeNumber = index;
+			print(index);
+			networkManager.Send(selctHole.Write());
+			isClicked = false;
+			return true;
+		}
+		//index = 0;
+		print("as");
+		return false;
+		/*if(index == -1)
+		{
+			return false;
+		}*/
+	}
 
-		byte[] buffer = new byte[1];
-		buffer[0] = (byte)index;
-		C_SelectHole selctHole = new C_SelectHole();
-		selctHole.holeNumber = index;
-		networkManager.Send(selctHole.Write());
-		return true;
+	public void SetIndex(int i)
+	{
+		isClicked = true;
+		index = i;
 	}
 
 	private bool DoOppnentTurn()
 	{
+		int index1 = HoleManager.Instance.ReturnIndex();
+		if (index1 <= 0)
+		{
+			// 아직 수신되지 않았습니다.
+			Debug.Log($"수신된 값 : {index}");
+			return false;
+		}
+
+		Player mark = (networkManager.IsServer() == true) ? Player.Player2 : Player.Player2;
+		holes[index1 - 2].SetSelected();
+		print(mark);
 
 		return true;
 	}
@@ -244,5 +299,6 @@ public class Manager : MonoBehaviour
 	public void SetPirateBoom()
 	{
 		pirate.GetComponent<Rigidbody>().AddForce(new Vector3(0f, 10f, 0), ForceMode.VelocityChange);
+		progress = GameProgress.GameOver;
 	}
 }

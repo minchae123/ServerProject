@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using DummyClient;
+using System;
+using Random = UnityEngine.Random;
 public class Hole : MonoBehaviour
 {
     [SerializeField] private GameObject knifePref;
@@ -35,10 +38,11 @@ public class Hole : MonoBehaviour
         knifePref.SetActive(true);
         knifePref.transform.DOLocalMoveX(-0.85f, 0.3f).OnComplete(() => CheckIsBoom());
 
-        print(numOfList);
+        Manager.Instance.SetIndex(numOfList);
+		print(numOfList);
     }
 
-    public void CheckSelected()
+	public void CheckSelected()
     {
         knifePref.SetActive(true);
         knifePref.transform.localPosition = new Vector3(-0.85f, 0, 0);
@@ -51,9 +55,9 @@ public class Hole : MonoBehaviour
             print("ÆÎ");
             Manager.Instance.SetPirateBoom();
         }
-        else
+        /*else
         {
             print("´ÙÀ½»ç¶÷");
-        }
+        }*/
     }
 }
