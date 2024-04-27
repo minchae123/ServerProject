@@ -19,12 +19,14 @@ namespace Server
 				// 돌 받고
 				session.holeNumber = packet.selectHole;
 
-				// 모두에게 알림
-				S_BroadCastHole move = new S_BroadCastHole();
-				move.holeNumber = session.holeNumber + 1;
-				Console.WriteLine(move.holeNumber);
-				BroadCast(move.Write());
-
+				foreach (ClientSession s in _sessions)
+				{
+					// 모두에게 알림
+					S_BroadCastHole move = new S_BroadCastHole();
+					move.holeNumber = session.holeNumber + 1;
+					Console.WriteLine(move.holeNumber);
+					BroadCast(move.Write());
+				}
 			}
 		}
 

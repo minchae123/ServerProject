@@ -234,6 +234,7 @@ public class Manager : MonoBehaviour
 	private bool DoOppnentTurn()
 	{
 		int index1 = HoleManager.Instance.ReturnIndex();
+		print(index1);
 		if (index1 <= 0)
 		{
 			// 아직 수신되지 않았습니다.
