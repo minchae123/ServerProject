@@ -34,8 +34,6 @@ namespace DummyClient
             PlayerManager.Instance.Add(pkt);
         }
        
-
-
         public static void S_BroadCastStoneHandler(PacketSession session, IPacket packet)
         {
             S_BroadCastHole pkt = packet as S_BroadCastHole;
@@ -43,7 +41,6 @@ namespace DummyClient
 
             PlayerManager.Instance.BroadCastStone(pkt);
         }
-
     }
 }
 

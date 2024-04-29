@@ -21,10 +21,20 @@ namespace Server
 
 				foreach (ClientSession s in _sessions)
 				{
-					// 모두에게 알림
+					if(s.SessionId == 1)
+					{
+						S_BroadCastHole move1 = new S_BroadCastHole();
+						move1.holeNumber = session.holeNumber;
+						s.Send(move1.Write());
+					}
+					else if(s.SessionId == 2)
+					{
+
+					}
+
 					S_BroadCastHole move = new S_BroadCastHole();
-					move.holeNumber = session.holeNumber + 1;
-					Console.WriteLine(move.holeNumber);
+					move.holeNumber = session.holeNumber;
+					Console.WriteLine($"{s.SessionId} {move.holeNumber}");
 					BroadCast(move.Write());
 				}
 			}

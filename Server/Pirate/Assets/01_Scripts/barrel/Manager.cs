@@ -57,6 +57,7 @@ public class Manager : MonoBehaviour
 
 	[SerializeField] private GameObject holePref;
 	[SerializeField] private Hole[] holes;
+	public bool[] isHole = new bool[16];
 
 	[SerializeField] private int upHoleCnt = 8;
 	[SerializeField] private int downHoleCnt = 8;
@@ -196,39 +197,26 @@ public class Manager : MonoBehaviour
 	bool isClicked = false;
 	private bool DoOwnTurn()
 	{
-		//print(index);
-		//timer -= Time.deltaTime;
-		/*if (timer <= 0.0f)
-		{
-			// 타임오버.
-			timer = 0.0f;
-			*//*do
-			{
-				index = UnityEngine.Random.Range(0, 8);
-			} while (spaces[index] != -1);*//*
-		}*/
 		if (isClicked)
 		{
 			C_SelectHole selctHole = new C_SelectHole();
 			selctHole.holeNumber = index;
-			print(index);
 			networkManager.Send(selctHole.Write());
 			isClicked = false;
 			return true;
 		}
-		//index = 0;
-		print("as");
 		return false;
-		/*if(index == -1)
-		{
-			return false;
-		}*/
+	}
+
+	public void HoleSelect(int i)
+	{
+		isHole[i] = true;
 	}
 
 	public void SetIndex(int i)
 	{
-		isClicked = true;
 		index = i;
+		isClicked = true;
 	}
 
 	private bool DoOppnentTurn()
@@ -301,5 +289,6 @@ public class Manager : MonoBehaviour
 	{
 		pirate.GetComponent<Rigidbody>().AddForce(new Vector3(0f, 10f, 0), ForceMode.VelocityChange);
 		progress = GameProgress.GameOver;
+		print(progress);
 	}
 }
