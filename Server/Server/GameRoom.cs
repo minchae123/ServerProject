@@ -21,11 +21,45 @@ namespace Server
 
 				foreach (ClientSession s in _sessions)
 				{
+<<<<<<< Updated upstream
 					// 모두에게 알림
 					S_BroadCastHole move = new S_BroadCastHole();
 					move.holeNumber = session.holeNumber + 1;
 					Console.WriteLine(move.holeNumber);
 					BroadCast(move.Write());
+=======
+					if(turn % 2 == 0)
+					{
+						if (s.SessionId == 1)
+						{
+							S_BroadCastHole move1 = new S_BroadCastHole();
+							move1.holeNumber = session.holeNumber;
+							s.Send(move1.Write());
+						}
+						else if (s.SessionId == 2)
+						{
+							S_BroadCastHole move = new S_BroadCastHole();
+							move.holeNumber = session.holeNumber;
+						}
+					}
+					else
+					{
+						if (s.SessionId == 1)
+						{
+							S_BroadCastHole move1 = new S_BroadCastHole();
+							move1.holeNumber = session.holeNumber;
+						}
+						else if (s.SessionId == 2)
+						{
+							S_BroadCastHole move = new S_BroadCastHole();
+							move.holeNumber = session.holeNumber;
+						}
+					}
+
+
+					//BroadCast(move.Write());
+					//Console.WriteLine($"{s.SessionId} {move.holeNumber}");
+>>>>>>> Stashed changes
 				}
 			}
 		}

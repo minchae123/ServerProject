@@ -19,6 +19,7 @@ namespace Server {
             Console.WriteLine($"{movePacket.selectHole}");
             
             GameRoom room = clientSession.Room;
+
             room.Move(clientSession, movePacket);
 
             //GameRoom room = clientSession.Room;

@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 using DG.Tweening;
 using UnityEngine.UI;
 using DummyClient;
+using Unity.VisualScripting;
 
 public class Manager : MonoBehaviour
 {
@@ -186,7 +187,6 @@ public class Manager : MonoBehaviour
 
 		if (winner == Winner.Player1)
 		{
-
 			progress = GameProgress.Result;
 		}
 	}
@@ -214,6 +214,8 @@ public class Manager : MonoBehaviour
 			print(index);
 			networkManager.Send(selctHole.Write());
 			isClicked = false;
+			playerTurn = Player.Player2;
+			print(playerTurn);
 			return true;
 		}
 		//index = 0;
@@ -242,7 +244,7 @@ public class Manager : MonoBehaviour
 			return false;
 		}
 
-		Player mark = (networkManager.IsServer() == true) ? Player.Player2 : Player.Player2;
+		Player mark = (networkManager.IsServer() == true) ? Player.Player2 : Player.Player1;
 		holes[index1 - 2].SetSelected();
 		print(mark);
 
