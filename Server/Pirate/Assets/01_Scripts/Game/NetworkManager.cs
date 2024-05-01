@@ -77,6 +77,7 @@ public class NetworkManager : MonoBehaviour
     // 서버인지 확인.
     public bool IsServer()
     {
+        print("asda");
         return m_isServer;
     }
 

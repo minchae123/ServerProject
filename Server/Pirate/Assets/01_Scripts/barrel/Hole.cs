@@ -39,6 +39,7 @@ public class Hole : MonoBehaviour
         knifePref.transform.DOLocalMoveX(-0.85f, 0.3f).OnComplete(() => CheckIsBoom());
 
         Manager.Instance.SetIndex(numOfList);
+        Manager.Instance.HoleSelect(numOfList);
 		print(numOfList);
     }
 
