@@ -204,7 +204,6 @@ public class Manager : MonoBehaviour
 			networkManager.Send(selctHole.Write());
 			isClicked = false;
 			playerTurn = Player.Player2;
-			print(playerTurn);
 			return true;
 		}
 		return false;
