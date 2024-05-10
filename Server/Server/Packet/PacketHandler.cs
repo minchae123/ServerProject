@@ -16,10 +16,10 @@ namespace Server {
             ClientSession clientSession = session as ClientSession;
             if (clientSession.Room == null)
                 return;
-            Console.WriteLine($"{movePacket.selectHole}");
+            Console.WriteLine($"구멍 숫자 : {movePacket.selectHole}");
+            Console.WriteLine($"Destiation ID : {movePacket.destinationId}");
             
             GameRoom room = clientSession.Room;
-
             room.Move(clientSession, movePacket);
 
             //GameRoom room = clientSession.Room;

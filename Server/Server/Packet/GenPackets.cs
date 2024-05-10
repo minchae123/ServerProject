@@ -28,7 +28,8 @@ namespace Server
     public class C_SelectHole : IPacket
     {
         public int selectHole;
-        public ushort Protocol { get { return (ushort)PacketID.C_SelectHole; } }
+		public int destinationId;
+		public ushort Protocol { get { return (ushort)PacketID.C_SelectHole; } }
 
         public void Read(ArraySegment<byte> segment)
         {
@@ -37,7 +38,9 @@ namespace Server
             count += sizeof(ushort);
             this.selectHole = BitConverter.ToInt32(segment.Array, segment.Offset + count);
             count += sizeof(int);
-        }
+			this.destinationId = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+			count += sizeof(int);
+		}
 
         public ArraySegment<byte> Write()
         {
@@ -49,8 +52,10 @@ namespace Server
             count += sizeof(ushort);
             Array.Copy(BitConverter.GetBytes(this.selectHole), 0, segment.Array, segment.Offset + count, sizeof(int));
             count += sizeof(int);
+			Array.Copy(BitConverter.GetBytes(this.destinationId), 0, segment.Array, segment.Offset + count, sizeof(int));
+			count += sizeof(int);
 
-            Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
+			Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
 
             return SendBufferHelper.Close(count);
         }

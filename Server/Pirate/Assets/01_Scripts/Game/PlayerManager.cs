@@ -7,7 +7,7 @@ using static DummyClient.S_PlayerList;
 public class PlayerManager
 {
     Player _myPlayer;
-    int StonePosition;
+    int holeNum;
     // 접속되있는 플레이어들의 목록
     Dictionary<int, Player> _players = new Dictionary<int, Player>();
 
@@ -17,12 +17,13 @@ public class PlayerManager
     // 돌 정보 수신
     public void BroadCastStone(S_BroadCastHole packet)
     {
-        StonePosition = packet.holeNumber;
+        holeNum = packet.holeNumber;
     }
 
-    public int returnStone()
+    public int ReturnHole()
     {
-        return StonePosition;
+        Debug.Log(holeNum);
+        return holeNum;
     }
 
 

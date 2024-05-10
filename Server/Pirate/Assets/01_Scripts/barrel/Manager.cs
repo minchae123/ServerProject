@@ -36,7 +36,8 @@ public class Manager : MonoBehaviour
 	private enum Winner
 	{
 		Player1 = 0,
-		Player2 = 1
+		Player2 = 1,
+		None
 	};
 
 	private const float turnTime = 100;
@@ -122,10 +123,22 @@ public class Manager : MonoBehaviour
 				UpdateTurn();
 				break;
 
+			case  GameProgress.Result:
+				{
+					//StartCoroutine(Delay());
+				}
+				break;
+
 			case GameProgress.GameOver:
 				//UpdateGameOver();
 				break;
 		}
+	}
+
+	IEnumerator Delay()
+	{
+		yield return new WaitForSeconds(1f);
+		progress = GameProgress.Turn;
 	}
 
 	public void GameStart()
@@ -186,28 +199,33 @@ public class Manager : MonoBehaviour
 		{
 		}
 
-		if (winner == Winner.Player1)
+		/*		if (winner == Winner.Player1)
+				{
+					progress = GameProgress.Result;
+				}*/
+
+		print(winner);
+		if (winner != Winner.None)
 		{
+			//승리한 경우는 사운드효과를 냅니다.
+			if ((winner == Winner.Player1 && localPlayer == Player.Player1)
+				|| (winner == Winner.Player2 && localPlayer == Player.Player2))
+			{
+
+			}
+			//BGM재생종료.
+
+			// 게임 종료입니다.
 			progress = GameProgress.Result;
 		}
+
+		playerTurn = playerTurn == Player.Player1 ? Player.Player2 : Player.Player1;
+		print(progress);
 	}
 
 	private float timer;
 	int index = 0;
 	bool isClicked = false;
-	private bool DoOwnTurn()
-	{
-		if (isClicked)
-		{
-			C_SelectHole selctHole = new C_SelectHole();
-			selctHole.holeNumber = index;
-			networkManager.Send(selctHole.Write());
-			isClicked = false;
-			playerTurn = Player.Player2;
-			return true;
-		}
-		return false;
-	}
 
 	public void HoleSelect(int i)
 	{
@@ -220,9 +238,32 @@ public class Manager : MonoBehaviour
 		isClicked = true;
 	}
 
+	private bool DoOwnTurn()
+	{
+		if (isClicked)
+		{
+			C_SelectHole selctHole = new C_SelectHole();
+			selctHole.holeNumber = index;
+
+			if (playerTurn == Player.Player1)
+			{
+				selctHole.destinationId = (int)Player.Player2 + 1;
+			}
+			else
+			{
+				selctHole.destinationId = (int)Player.Player1 + 1;
+			}
+
+			networkManager.Send(selctHole.Write());
+			isClicked = false;
+			return true;
+		}
+		return false;
+	}
+
 	private bool DoOppnentTurn()
 	{
-		int index1 = HoleManager.Instance.ReturnIndex();
+		int index1 = PlayerManager.Instance.ReturnHole();
 		print(index1);
 		if (index1 <= 0)
 		{
@@ -234,6 +275,8 @@ public class Manager : MonoBehaviour
 		Player mark = (networkManager.IsServer() == true) ? Player.Player2 : Player.Player1;
 		holes[index1 - 2].SetSelected();
 		print(mark);
+
+		print(playerTurn);
 
 		return true;
 	}

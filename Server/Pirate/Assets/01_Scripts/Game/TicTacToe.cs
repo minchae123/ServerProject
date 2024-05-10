@@ -307,7 +307,7 @@ public class TicTacToe : MonoBehaviour
         Debug.Log("DoOppnentTurn");
 
         // 상대의 정보를 수신합니다.
-        int index = PlayerManager.Instance.returnStone();
+        int index = PlayerManager.Instance.ReturnHole();
         if (index <= 0)
         {
             // 아직 수신되지 않았습니다.

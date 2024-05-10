@@ -21,32 +21,16 @@ namespace Server
 
 				foreach (ClientSession s in _sessions)
 				{
-
-					if (s.SessionId == 1)
+					Console.WriteLine($"세션 ID : {s.SessionId}");
+					Console.WriteLine($"목적지 ID : {packet.destinationId}");
+					if(s.SessionId == packet.destinationId)
 					{
-						S_BroadCastHole move1 = new S_BroadCastHole();
-						move1.holeNumber = session.holeNumber;
-						s.Send(move1.Write());
+						Console.WriteLine($"구멍 번호 : {packet.selectHole}");
+						
+						S_BroadCastHole SHole = new S_BroadCastHole();
+						SHole.holeNumber = packet.selectHole;
+						s.Send(SHole.Write());
 					}
-					else if (s.SessionId == 2)
-					{
-						S_BroadCastHole move = new S_BroadCastHole();
-						move.holeNumber = session.holeNumber;
-					}
-
-					if (s.SessionId == 1)
-					{
-						S_BroadCastHole move1 = new S_BroadCastHole();
-						move1.holeNumber = session.holeNumber;
-					}
-					else if (s.SessionId == 2)
-					{
-						S_BroadCastHole move = new S_BroadCastHole();
-						move.holeNumber = session.holeNumber;
-					}
-
-					//BroadCast(move.Write());
-					//Console.WriteLine($"{s.SessionId} {move.holeNumber}");
 				}
 			}
 		}
