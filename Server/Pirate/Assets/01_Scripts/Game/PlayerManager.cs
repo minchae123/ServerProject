@@ -7,7 +7,7 @@ using static DummyClient.S_PlayerList;
 public class PlayerManager
 {
     Player _myPlayer;
-    int holeNum;
+    int holeNum = -1;
     // 접속되있는 플레이어들의 목록
     Dictionary<int, Player> _players = new Dictionary<int, Player>();
 
@@ -23,7 +23,10 @@ public class PlayerManager
     public int ReturnHole()
     {
         Debug.Log(holeNum);
-        return holeNum;
+        int returnHole = 0;
+        returnHole = holeNum;
+        holeNum = -1;
+        return returnHole;
     }
 
 

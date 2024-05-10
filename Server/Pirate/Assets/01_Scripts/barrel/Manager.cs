@@ -44,8 +44,8 @@ public class Manager : MonoBehaviour
 	private GameProgress progress;
 	private Player playerTurn;
 	private Player localPlayer;
-	private Player romotePlayer;
-	private Winner winner;
+	private Player remotePlayer;
+	private Winner winner = Winner.None;
 
 	public bool isGameOver;
 
@@ -123,12 +123,6 @@ public class Manager : MonoBehaviour
 				UpdateTurn();
 				break;
 
-			case  GameProgress.Result:
-				{
-					//StartCoroutine(Delay());
-				}
-				break;
-
 			case GameProgress.GameOver:
 				//UpdateGameOver();
 				break;
@@ -149,12 +143,12 @@ public class Manager : MonoBehaviour
 		if (networkManager.IsServer())
 		{
 			localPlayer = Player.Player1;
-			romotePlayer = Player.Player2;
+			remotePlayer = Player.Player2;
 		}
 		else
 		{
 			localPlayer = Player.Player2;
-			romotePlayer = Player.Player1;
+			remotePlayer = Player.Player1;
 		}
 
 		isGameOver = false;
@@ -178,14 +172,16 @@ public class Manager : MonoBehaviour
 
 	public void UpdateTurn()
 	{
-		print(playerTurn.ToString());
+		print(localPlayer);
+		print(remotePlayer);
+		print("Turn" + playerTurn.ToString());
 		bool setMark = false;
 		if (playerTurn == localPlayer)
 		{
 			setMark = DoOwnTurn();
 
 		}
-		else
+		else if (playerTurn == remotePlayer)
 		{
 			setMark = DoOppnentTurn();
 
@@ -198,11 +194,6 @@ public class Manager : MonoBehaviour
 		else
 		{
 		}
-
-		/*		if (winner == Winner.Player1)
-				{
-					progress = GameProgress.Result;
-				}*/
 
 		print(winner);
 		if (winner != Winner.None)
@@ -218,7 +209,6 @@ public class Manager : MonoBehaviour
 			// 게임 종료입니다.
 			progress = GameProgress.Result;
 		}
-
 		playerTurn = playerTurn == Player.Player1 ? Player.Player2 : Player.Player1;
 		print(progress);
 	}
@@ -242,20 +232,26 @@ public class Manager : MonoBehaviour
 	{
 		if (isClicked)
 		{
+			print(isClicked);
+			isClicked = false;
+			print(isClicked);
 			C_SelectHole selctHole = new C_SelectHole();
 			selctHole.holeNumber = index;
 
-			if (playerTurn == Player.Player1)
+			if (localPlayer == Player.Player1)
 			{
+				print("보낸 값 목적지 2 " + index);
 				selctHole.destinationId = (int)Player.Player2 + 1;
 			}
 			else
 			{
+				print("목적지 1" + index);
 				selctHole.destinationId = (int)Player.Player1 + 1;
 			}
 
 			networkManager.Send(selctHole.Write());
-			isClicked = false;
+			index = -1;
+			print(playerTurn);
 			return true;
 		}
 		return false;
@@ -268,12 +264,12 @@ public class Manager : MonoBehaviour
 		if (index1 <= 0)
 		{
 			// 아직 수신되지 않았습니다.
-			Debug.Log($"수신된 값 : {index}");
+			Debug.Log($"수신된 값 : {index1}");
 			return false;
 		}
 
 		Player mark = (networkManager.IsServer() == true) ? Player.Player2 : Player.Player1;
-		holes[index1 - 2].SetSelected();
+		holes[index1].SetSelected();
 		print(mark);
 
 		print(playerTurn);
@@ -332,7 +328,9 @@ public class Manager : MonoBehaviour
 	public void SetPirateBoom()
 	{
 		pirate.GetComponent<Rigidbody>().AddForce(new Vector3(0f, 10f, 0), ForceMode.VelocityChange);
+		winner = (Winner)remotePlayer;
 		progress = GameProgress.GameOver;
+		print(winner);
 		print(progress);
 	}
 }

@@ -34,13 +34,16 @@ public class Hole : MonoBehaviour
 
     public void SetSelected()
     {
-        IsSelected = true;
-        knifePref.SetActive(true);
-        knifePref.transform.DOLocalMoveX(-0.85f, 0.3f).OnComplete(() => CheckIsBoom());
+        if(IsSelected == false)
+        {
+            IsSelected = true;
+            knifePref.SetActive(true);
+            knifePref.transform.DOLocalMoveX(-0.85f, 0.3f).OnComplete(() => CheckIsBoom());
 
-        Manager.Instance.SetIndex(numOfList);
-        Manager.Instance.HoleSelect(numOfList);
-		print(numOfList);
+            Manager.Instance.SetIndex(numOfList);
+            Manager.Instance.HoleSelect(numOfList);
+		    print(numOfList);
+        }
     }
 
 	public void CheckSelected()
